@@ -10,7 +10,7 @@
     * String url
     
 * Author
-    * name
+    * String name
     
 * BookList (?)
     * title
