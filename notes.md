@@ -6,12 +6,22 @@
 
 * Book
     * String title
-    * List<Author> authors
+    * Set<Author> authors
     * String url
     
 * Author
-    * name    
+    * name
+    
+* BookList (?)
+    * title
+    * url
+    * List<Book> books 
+    
+### API endpoints
 
+* GET /list/{id}
+* GET /book/{id}
+...
 
 ## Web scraping
 
