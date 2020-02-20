@@ -3,38 +3,75 @@ package com.codecool.kp.sffvectoradmin.service;
 import com.codecool.kp.sffvectoradmin.model.Author;
 import com.codecool.kp.sffvectoradmin.model.Book;
 import com.codecool.kp.sffvectoradmin.model.BookList;
+import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
+@Slf4j
 public class MolyScrapingService {
 
     public BookList getBookList(String bookListUrl) {
-        // sample data for testing
-        Author a1 = Author.builder()
-                .id(1L)
-                .name("author1")
-                .build();
-        Author a2 = Author.builder()
-                .id(2L)
-                .name("author2")
-                .build();
-        Book book1 = Book.builder()
-                .id(1L)
-                .title("title 1")
-                .author(a1)
-                .author(a2)
-                .build();
-        Book book2 = Book.builder()
-                .id(1L)
-                .title("title 2")
-                .author(a1)
-                .build();
+        // TODO extract method?
+        Document doc;
+        try {
+            doc = Jsoup.connect(getMolyUrl(bookListUrl)).get();
+        } catch (IOException e) { // TODO handle HttpStatusException separately?
+            e.printStackTrace();
+            return null;
+        }
+
+        final String listTitle = doc.selectFirst("h1").ownText();
+
+        final Elements bookLinks = doc.select("a .fn, .book_selector");
+        final List<Book> books = bookLinks.stream()
+                .map(element -> element.attr("href"))
+                .map(this::getBook)
+                .collect(Collectors.toList());
+
+        log.info("== Got this list from moly.hu: " + listTitle + ", length: " + books.size());
 
         return BookList.builder()
-                .id(1L)
                 .url(bookListUrl)
-                .book(book1)
-                .book(book2)
+                .title(listTitle)
+                .books(books)
                 .build();
+    }
+
+    private Book getBook(String bookUrl) {
+        Document doc;
+        try {
+            doc = Jsoup.connect(getMolyUrl(bookUrl)).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        String title = doc.selectFirst("span.fn").ownText();
+
+        final Elements authorLinks = doc.select("div.authors a");
+        List<Author> authors = authorLinks.stream()
+                .map(Element::text)
+                .map(Author::new)
+                .collect(Collectors.toList());
+
+        return Book.builder()
+                .url(bookUrl)
+                .title(title)
+                .authors(authors)
+                .build();
+    }
+
+
+    private String getMolyUrl(String url) {
+        String molyBaseUrl = "https://moly.hu";
+        return molyBaseUrl + url;
     }
 }

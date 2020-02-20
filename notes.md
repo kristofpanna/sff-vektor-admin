@@ -37,15 +37,16 @@
 
 #### List page
 * eg.
-    * short: https://moly.hu/listak/2020-terv-4
-    * long: https://moly.hu/listak/2019-es-science-fiction-megjelenesek
+    * short: https://moly.hu /listak/2020-terv-4
+    * long: https://moly.hu /listak/2019-es-science-fiction-megjelenesek
    
 * TODO:
-    - select all book links:  a .fn, .book_selector
-    - for each:
-        - get href attribute
-        - go to book page
-        - get book info
+    + select list title: h1 
+    + select all book links:  a .fn, .book_selector
+    + for each:
+        + get href attribute
+        + go to book page
+        + get book info
     - also with paging, if there is more
         - decide if there are multiple pages:
             * if exists "Következő" element (link/span):  .pagination .next_page
@@ -53,6 +54,7 @@
     
 #### Book page
 * eg. https://moly.hu/konyvek/adrian-tchaikovsky-az-ido-gyermekei
-* TODO get book info: 
-    * title:  span.fn
-    * authors:  div.authors a
++ TODO get book info: 
+    + title:  span.fn
+    + authors:  div.authors a
+
