@@ -1,9 +1,6 @@
 package com.codecool.kp.sffvectoradmin.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,5 +13,6 @@ public class Book {
     private Long id;
     private String title;
     private String url;
+    @Singular
     private List<Author> authors = new ArrayList<>();
 }
