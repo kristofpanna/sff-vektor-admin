@@ -51,10 +51,12 @@
         - decide if there are multiple pages:
             * if exists "Következő" element (link/span):  .pagination .next_page   -> href: url of next page
         - load all pages (until Next element has disabled class)
+    - also with moly.hu "polc" -> int book list
     
 #### Book page
 * eg. https://moly.hu/konyvek/adrian-tchaikovsky-az-ido-gyermekei
-+ TODO get book info: 
++ get book info: 
     + title:  span.fn
     + authors:  div.authors a
+- TODO add note field to model object
 
