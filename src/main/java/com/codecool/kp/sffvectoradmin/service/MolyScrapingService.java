@@ -30,11 +30,7 @@ public class MolyScrapingService {
 
         final String listTitle = doc.selectFirst("h1").ownText();
 
-        final Elements bookLinks = doc.select("a .fn, .book_selector");
-        final List<Book> books = bookLinks.stream()
-                .map(element -> element.attr("href"))
-                .map(this::getBook)
-                .collect(Collectors.toList());
+        final List<Book> books = getBooksFromListPage(doc);
 
         log.info("== Got this list from moly.hu: " + listTitle + ", length: " + books.size());
 
@@ -43,6 +39,14 @@ public class MolyScrapingService {
                 .title(listTitle)
                 .books(books)
                 .build();
+    }
+
+    private List<Book> getBooksFromListPage(Document doc) {
+        final Elements bookLinks = doc.select("a .fn, .book_selector");
+        return bookLinks.stream()
+                .map(element -> element.attr("href"))
+                .map(this::getBook)
+                .collect(Collectors.toList());
     }
 
     private Book getBook(String bookUrl) {

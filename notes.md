@@ -27,7 +27,7 @@
 
 ### HTML parsing
 * tutorials for jsoup: 
-    - https://www.baeldung.com/java-with-jsoup
+    + https://www.baeldung.com/java-with-jsoup
     - https://www.thetechnojournals.com/2019/11/web-scraper-using-jsoup-and-spring-boot.html
     - https://stackabuse.com/web-scraping-the-java-way/
     - https://jsoup.org/ -> https://stackabuse.com/web-scraping-the-java-way/
@@ -49,7 +49,7 @@
         + get book info
     - also with paging, if there is more
         - decide if there are multiple pages:
-            * if exists "Következő" element (link/span):  .pagination .next_page
+            * if exists "Következő" element (link/span):  .pagination .next_page   -> href: url of next page
         - load all pages (until Next element has disabled class)
     
 #### Book page
