@@ -19,11 +19,10 @@ import java.util.stream.Collectors;
 public class MolyScrapingService {
 
     public BookList getBookList(String bookListUrl) {
-        // TODO extract method?
         Document doc;
         try {
             doc = Jsoup.connect(getMolyUrl(bookListUrl)).get();
-        } catch (IOException e) { // TODO handle HttpStatusException separately?
+        } catch (IOException e) { // spec. HttpStatusException
             e.printStackTrace();
             return null;
         }
@@ -33,7 +32,6 @@ public class MolyScrapingService {
         final List<Book> books = getBooksFromListPage(doc);
 
         log.info("== Got this list from moly.hu: " + listTitle + ", length: " + books.size());
-
         return BookList.builder()
                 .url(bookListUrl)
                 .title(listTitle)
@@ -74,8 +72,8 @@ public class MolyScrapingService {
     }
 
 
-    private String getMolyUrl(String url) {
+    private String getMolyUrl(String urlTail) {
         String molyBaseUrl = "https://moly.hu";
-        return molyBaseUrl + url;
+        return molyBaseUrl + urlTail;
     }
 }
