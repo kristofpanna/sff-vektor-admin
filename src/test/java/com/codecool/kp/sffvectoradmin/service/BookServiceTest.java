@@ -24,6 +24,7 @@ class BookServiceTest extends BaseTestWithMockito {
     BookService bookService;
 
     @Test
+    @Deprecated
     void getBookList() {
         String bookListUrl = "https://moly.hu/listak/2020-terv-4";
 
@@ -54,7 +55,7 @@ class BookServiceTest extends BaseTestWithMockito {
                 .book(book2)
                 .build();
 
-        when(molyScrapingService.getBookList(bookListUrl)).thenReturn(bookList);
+       // when(molyScrapingService.getShelfItemsFromUrl(bookListUrl).thenReturn(bookList);
 
 
         BookList gotBookList = bookService.getBookList(1L);
