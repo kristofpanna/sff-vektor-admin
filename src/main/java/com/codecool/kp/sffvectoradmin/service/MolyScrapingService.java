@@ -18,7 +18,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MolyScrapingService {
 
-    public BookList getBookList(String bookListUrl) {
+    // for testing
+    public BookList getBookList(String bookListUrl) { // TODO refactor: refreshBookLists()
+        log.info("== Listák frissítése molyról elkezdődött ");
         Document doc;
         try {
             doc = Jsoup.connect(getMolyUrl(bookListUrl)).get();
@@ -26,12 +28,18 @@ public class MolyScrapingService {
             e.printStackTrace();
             return null;
         }
+        log.info("== sikeres csatlakozás moly.hu-hoz ");
 
         final String listTitle = doc.selectFirst("h1").ownText();
 
-        final List<Book> books = getBooksFromListPage(doc);
+        final List<MolyShelfItem> shelfItems = getShelfItemsFromDoc(doc);
+        // TODO check note problems (no "sci-fi" or "fantasy") -> log error and don't refresh
 
-        log.info("== Got this list from moly.hu: " + listTitle + ", length: " + books.size());
+        // TODO load all lists
+        // TODO check if all books on 1 list (-> log error and don't refresh if not)
+        final List<Book> books = getBooksFromShelfItems(shelfItems);
+
+        log.info("== Lista/polc: " + listTitle + ", könyvek száma: " + books.size());
         return BookList.builder()
                 .url(bookListUrl)
                 .title(listTitle)
@@ -39,12 +47,35 @@ public class MolyScrapingService {
                 .build();
     }
 
-    private List<Book> getBooksFromListPage(Document doc) {
+    /* MolyShelfItem */
+
+    private List<MolyShelfItem> getShelfItemsFromDoc(Document doc) {
         final Elements bookLinks = doc.select("a .fn, .book_selector");
         return bookLinks.stream()
-                .map(element -> element.attr("href"))
-                .map(this::getBook)
+                .map(this::getShelfItemFromElement)
+                .peek(item -> log.info("=== Lista/polc elem: " + item.getDescription() + ", url: " + item.getUrl()))
                 .collect(Collectors.toList());
+    }
+
+    private MolyShelfItem getShelfItemFromElement(Element element) {
+        return MolyShelfItem.builder()
+                .url(element.attr("href"))
+                .description(element.ownText())
+                .build();
+    }
+
+
+    /* Book */
+
+    private List<Book> getBooksFromShelfItems(List<MolyShelfItem> shelfItems) {
+        return shelfItems.stream()
+                .map(this::getBookFromShelfItem)
+                .collect(Collectors.toList());
+    }
+
+    private Book getBookFromShelfItem(MolyShelfItem molyShelfItem) {
+        // TODO from repo if saved
+        return getBook(molyShelfItem.getUrl());
     }
 
     private Book getBook(String bookUrl) {
