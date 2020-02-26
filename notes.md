@@ -36,9 +36,11 @@
 ### moly.hu structure
 
 #### List page
-* eg.
-    * short: https://moly.hu /listak/2020-terv-4
-    * long: https://moly.hu /listak/2019-es-science-fiction-megjelenesek
+* eg. https://moly.hu
+    * short "lista": /listak/2020-terv-4
+    * long (42) "lista": /listak/2019-es-science-fiction-megjelenesek
+    * short "polc": /polcok/besorolasra-var-2019
+    * long (22) "polc": /polcok/csak-nalunk-kaphato-kiadvanyok
    
 * TODO:
     + select list title: h1 
@@ -47,16 +49,15 @@
         + get href attribute
         + go to book page
         + get book info
-    - also with paging, if there is more
-        - decide if there are multiple pages:
+    + also with paging, if there is more
+        + decide if there are multiple pages:
             * if exists "Következő" element (link/span):  .pagination .next_page   -> href: url of next page
-        - load all pages (until Next element has disabled class)
-    - also with moly.hu "polc" -> int book list
+        + load all pages (until Next element has disabled class)
+    + also with moly.hu "polc" 
     
 #### Book page
 * eg. https://moly.hu/konyvek/adrian-tchaikovsky-az-ido-gyermekei
 + get book info: 
     + title:  span.fn
     + authors:  div.authors a
-- TODO add note field to model object
 

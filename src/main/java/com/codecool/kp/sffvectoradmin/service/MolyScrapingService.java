@@ -19,18 +19,42 @@ public class MolyScrapingService {
 
     /* ShelfItems */
 
-    public List<MolyShelfItem> getShelfItemsFromUrl(String shelfURL) {
-        boolean isPolc = isPolc(shelfURL);
+    public List<MolyShelfItem> getShelfItemsFromUrl(String shelfUrl) {
+        boolean isPolc = isPolc(shelfUrl);
         String typeName = isPolc ? "Polc" : "Lista";
 
-        Document doc = getDocumentFromUrl(shelfURL);
-        log.info("== " + typeName + " szkennelése: " + doc.selectFirst("h1").ownText()); // TODO throw exception
-
-        final Elements bookLinks = doc.select("a .fn, .book_selector");
+        final Elements bookLinks = getBookLinksFromAllPages(shelfUrl);
         return bookLinks.stream()
                 .map(e -> getShelfItemFromElement(e, isPolc))
                 .peek(item -> log.info("=== " + typeName + "elem: " + item.getDescription() + ", url: " + item.getUrl()))
                 .collect(Collectors.toList());
+    }
+
+    private Elements getBookLinksFromAllPages(String url) {
+        String typeName = isPolc(url) ? "Polc" : "Lista"; // for log
+        Document doc;
+        Elements bookLinks = new Elements();
+        String nextUrl = url;
+        do {
+            doc = getDocumentFromUrl(nextUrl);
+            bookLinks.addAll(getBookLinksFromPage(doc));
+            nextUrl = getNextUrl(doc);
+        } while (nextUrl != null);
+
+        log.info("== " + typeName + " szkennelése befejeződött: " + url + " könyvek száma: " + bookLinks.size());
+        return bookLinks;
+    }
+
+    private Elements getBookLinksFromPage(Document document) {
+        return document.select("a .fn, .book_selector");
+    }
+
+    private String getNextUrl(Document doc) {
+        final Elements nextLinks = doc.select(".pagination .next_page");
+        if (nextLinks.isEmpty()) {
+            return null;
+        }
+        return nextLinks.first().attr("href");
     }
 
     /**
@@ -41,13 +65,18 @@ public class MolyScrapingService {
     }
 
     private String getNoteForPolcElement(Element element) {
-        final String note = element
-                .parent()   // h3.item
-                .parent()   // div.book_atom
-                .siblingElements().select(".sticky_note").first()
-                .select("p").first()
-                .text();
-        log.info("=== Megjegyzés: " + note);
+        String note = null;
+        try {
+            note = element
+                    .parent()   // h3.item
+                    .parent()   // div.book_atom
+                    .siblingElements().select(".sticky_note").first()
+                    .select("p").first()
+                    .text();
+            log.info("=== Megjegyzés: " + note);
+        } catch (NullPointerException e) {
+            log.info("=== Nincs megjegyzés a polcelemnél!"); // TODO is it normal not to have a note?
+        }
         return note;
     }
 
