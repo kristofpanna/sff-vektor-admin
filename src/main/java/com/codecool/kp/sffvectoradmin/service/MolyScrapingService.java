@@ -94,7 +94,7 @@ public class MolyScrapingService {
     public Book getBook(String bookUrl) {
         Document doc = getDocumentFromUrl(bookUrl);
 
-        String title = doc.selectFirst("span.fn").ownText(); // TODO throw exception
+        String title = doc.selectFirst("span.fn").ownText();
         log.info("=== Új könyv, címe: " + title);
 
         final Elements authorLinks = doc.select("div.authors a");
@@ -112,15 +112,16 @@ public class MolyScrapingService {
 
     /* Util */
 
-    private Document getDocumentFromUrl(String Url) {
+    private Document getDocumentFromUrl(String url) {
         Document doc;
         try {
-            doc = Jsoup.connect(getMolyUrl(Url)).get();
-        } catch (IOException e) { // spec. HttpStatusException
+            doc = Jsoup.connect(getMolyUrl(url)).get();
+        } catch (IOException e) { // spec. HttpStatusException // TODO throw exception
             e.printStackTrace();
+            log.error("Nem elérhető: " + getMolyUrl(url));
             return null;
         }
-        log.info("== Sikeres csatlakozás a moly.hu-hoz ");
+        log.debug("== Sikeres csatlakozás a moly.hu-hoz ");
         return doc;
     }
 
