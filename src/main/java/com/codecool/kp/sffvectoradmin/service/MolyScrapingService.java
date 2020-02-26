@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MolyScrapingService {
 
+    /* ShelfItems */
+
     public List<MolyShelfItem> getShelfItemsFromUrl(String shelfURL) {
         boolean isPolc = isPolc(shelfURL);
         String typeName = isPolc ? "Polc" : "Lista";
@@ -32,7 +34,7 @@ public class MolyScrapingService {
     }
 
     /**
-     * Returns true if the url points to a "polc" (not a "lista")
+     * Returns true if the url points to a "polc" on moly.hu (not a "lista")
      */
     private boolean isPolc(String url) {
         return url.startsWith("polcok", 1);
@@ -57,6 +59,8 @@ public class MolyScrapingService {
                 .note(note)
                 .build();
     }
+
+    /* Books */
 
     public Book getBook(String bookUrl) {
         Document doc = getDocumentFromUrl(bookUrl);
