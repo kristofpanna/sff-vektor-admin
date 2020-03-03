@@ -13,7 +13,7 @@ public class BookList {
     private Long id;
 
     private String genre;
-    private String year; // TODO str or int?
+    private int year;
     private String url;
 
 

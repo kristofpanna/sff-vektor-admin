@@ -49,7 +49,7 @@ public class BookService {
         // TODO refresh book-booklist connections
         this.bookList = BookList.builder()
                 .url(bookListUrl)
-                .year("2020")
+                .year(2020)
                 .genre("sci-fi")
                 .books(books)
                 .build();
