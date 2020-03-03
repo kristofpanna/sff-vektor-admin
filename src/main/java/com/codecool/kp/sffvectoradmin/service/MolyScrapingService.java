@@ -98,6 +98,16 @@ public class MolyScrapingService {
         String title = doc.selectFirst("span.fn").ownText();
         log.info("=== Új könyv, címe: " + title);
 
+        List<Author> authors = getAuthorsFromBookPage(doc);
+
+        return Book.builder()
+                //.url(bookUrl) // todo url->alternative
+                .title(title)
+                .authors(authors)
+                .build();
+    }
+
+    private List<Author> getAuthorsFromBookPage(Document doc) {
         final Elements authorLinks = doc.select("div.authors a");
         List<Author> authors = new ArrayList<>();
         for (Element authorLink : authorLinks) {
@@ -106,12 +116,7 @@ public class MolyScrapingService {
             Author author = new Author(text, url);
             authors.add(author);
         }
-
-        return Book.builder()
-                .url(bookUrl)
-                .title(title)
-                .authors(authors)
-                .build();
+        return authors;
     }
 
     /* Util */
