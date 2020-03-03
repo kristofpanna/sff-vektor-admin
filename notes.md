@@ -1,21 +1,6 @@
 # Notes
 
 ## Backend plan
-
-### Model objects
-
-* Book
-    * String title
-    * Set<Author> authors
-    * String url
-    
-* Author
-    * String name
-    
-* BookList (?)
-    * title
-    * url
-    * List<Book> books 
     
 ### API endpoints
 

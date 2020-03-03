@@ -8,12 +8,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Author {
     private Long id;
-    private String name;
 
-    public Author(String name) {
-        this.name = name;
+    private String displayName;
+    private String sortName;
+    private String url;
+
+    public Author(String displayName, String url) {
+        this.displayName = displayName;
+        this.sortName = displayName;
+        this.url = url;
     }
 }

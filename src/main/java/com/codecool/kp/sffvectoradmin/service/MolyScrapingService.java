@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,10 +99,13 @@ public class MolyScrapingService {
         log.info("=== Új könyv, címe: " + title);
 
         final Elements authorLinks = doc.select("div.authors a");
-        List<Author> authors = authorLinks.stream()
-                .map(Element::text)
-                .map(Author::new)
-                .collect(Collectors.toList());
+        List<Author> authors = new ArrayList<>();
+        for (Element authorLink : authorLinks) {
+            String text = authorLink.text();
+            String url = authorLink.attr("href");
+            Author author = new Author(text, url);
+            authors.add(author);
+        }
 
         return Book.builder()
                 .url(bookUrl)

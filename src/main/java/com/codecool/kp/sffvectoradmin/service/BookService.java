@@ -31,9 +31,11 @@ public class BookService {
     public void refreshBookLists() {
         log.info("== Listák frissítése molyról elkezdődött ");
 
-        //String bookListUrl = "/listak/2019-es-science-fiction-megjelenesek"; // TODO all lists (from db)
-        //String bookListUrl = "/polcok/besorolasra-var-2019"; // TODO all lists (from db)
-        String bookListUrl = "/polcok/csak-nalunk-kaphato-kiadvanyok"; // TODO all lists (from db)
+        // TODO all lists (from db)
+        //String bookListUrl = "/listak/2019-es-science-fiction-megjelenesek";
+        //String bookListUrl = "/polcok/besorolasra-var-2019";
+        //String bookListUrl = "/polcok/csak-nalunk-kaphato-kiadvanyok";
+        String bookListUrl = "/listak/2020-terv-4";
 
         final List<MolyShelfItem> shelfItems = scrapingService.getShelfItemsFromUrl(bookListUrl);
         // TODO check note problems (no "sci-fi" or "fantasy") -> log error and don't refresh
