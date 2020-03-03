@@ -11,8 +11,12 @@ import java.util.List;
 @Builder
 public class BookList {
     private Long id;
+
+    private String genre;
+    private String year; // TODO str or int?
     private String url;
-    private String title;
+
+
     @Singular
     private List<Book> books = new ArrayList<>();
 }

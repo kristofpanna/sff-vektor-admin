@@ -45,15 +45,16 @@ public class BookService {
 
         // refresh books
         final List<Book> books = refreshBooksByShelfItems(shelfItems);
-        final String listTitle = "sci-fi"; // TODO (get title from booklist object)
-        log.info("== Lista frissítve: " + listTitle + ", könyvek száma: " + books.size());
 
         // TODO refresh book-booklist connections
         this.bookList = BookList.builder()
                 .url(bookListUrl)
-                .title(listTitle)
+                .year("2020")
+                .genre("sci-fi")
                 .books(books)
                 .build();
+
+        log.info("== Lista frissítve: " + bookList.getGenre() + ", könyvek száma: " + books.size());
     }
 
     private List<Book> refreshBooksByShelfItems(List<MolyShelfItem> shelfItems) {
