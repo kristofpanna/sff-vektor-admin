@@ -1,5 +1,6 @@
 package com.codecool.kp.sffvectoradmin.model.book;
 
+import com.codecool.kp.sffvectoradmin.model.user.Reader;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
@@ -27,9 +28,12 @@ public class BookList {
     private String url;
 
     @Singular
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "onLists", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Book> books = new ArrayList<>();
 
+    @Singular
+    @ManyToMany(mappedBy = "judgesLists")
+    private List<Reader> readers = new ArrayList<>();
 
     /*
     public List<Book> getBooks() {
