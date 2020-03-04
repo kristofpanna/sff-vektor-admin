@@ -54,6 +54,10 @@ public class BookService {
                 .books(books)
                 .build();
 
+        for (Book book : books) {
+            book.setYear(bookList.getYear());
+        }
+
         log.info("== Lista frissítve: " + bookList.getGenre() + ", könyvek száma: " + books.size());
     }
 
