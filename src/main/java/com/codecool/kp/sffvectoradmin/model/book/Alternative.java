@@ -13,8 +13,4 @@ public class Alternative {
     private Long id;
 
     private String name;
-
-    public Alternative(String name) {
-        this.name = name;
-    }
 }

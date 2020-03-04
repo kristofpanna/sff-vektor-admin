@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
 public class MolyUrl {
     private Long id;
 
-    String url;
-
-    public MolyUrl(String url) {
-        this.url = url;
-    }
+    private String url;
+    private int seqId;
 }
