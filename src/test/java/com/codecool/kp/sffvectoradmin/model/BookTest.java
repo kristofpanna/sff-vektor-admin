@@ -4,6 +4,7 @@ import com.codecool.kp.sffvectoradmin.model.book.Author;
 import com.codecool.kp.sffvectoradmin.model.book.Book;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {
@@ -27,5 +28,17 @@ class BookTest {
         final String expectedKey = "Arkagyij Sztrugackij, Borisz Sztrugackij, Mégegy Sztrugackij: Sztrugackij életmű sorozat 2 - A sztalker visszatér";
         assertEquals(expectedKey, book.getKey());
 
+    }
+
+    @Test
+    void compareTo() {
+        Book a = Book.builder()
+                .title("a")
+                .build();
+        Book b = Book.builder()
+                .title("b")
+                .build();
+
+        assertThat(a.compareTo(b)).isLessThan(0);
     }
 }
