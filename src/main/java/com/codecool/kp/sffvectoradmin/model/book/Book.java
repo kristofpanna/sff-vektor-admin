@@ -38,6 +38,7 @@ public class Book {
     @ManyToMany(mappedBy = "books", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<BookList> lists = new HashSet<>();
 
+
     public String getKey() {
         String seriesInfo = "";
         if (series != null) {
@@ -50,5 +51,10 @@ public class Book {
                 .collect(Collectors.joining(", "));
 
         return authorNames + ": " + seriesInfo + title;
+    }
+
+    @Override
+    public int compareTo(Book book) {
+        return getKey().compareTo(book.getKey());
     }
 }
