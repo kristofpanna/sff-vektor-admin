@@ -2,11 +2,11 @@ package com.codecool.kp.sffvectoradmin.model.book;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -28,11 +28,15 @@ public class Book {
     private boolean isApproved = false;
 
     @Setter(AccessLevel.NONE)
-    // TODO @Transient
+    @Transient
     private String key;
 
     @Singular
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Author> authors = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "books", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<BookList> lists = new HashSet<>();
 
     public String getKey() {
         String seriesInfo = "";

@@ -6,9 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.repository.cdi.Eager;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +22,9 @@ public class Author {
     private String displayName;
     private String sortName;
     private String url;
+
+    @ManyToMany(mappedBy = "authors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Book> books = new ArrayList<>();
 
     public Author(String displayName, String url) {
         this.displayName = displayName;

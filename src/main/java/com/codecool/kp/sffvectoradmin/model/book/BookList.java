@@ -2,9 +2,7 @@ package com.codecool.kp.sffvectoradmin.model.book;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +22,7 @@ public class BookList {
 
 
     @Singular
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Book> books = new ArrayList<>();
 
     /*
