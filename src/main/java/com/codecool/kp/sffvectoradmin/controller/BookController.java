@@ -1,6 +1,6 @@
 package com.codecool.kp.sffvectoradmin.controller;
 
-import com.codecool.kp.sffvectoradmin.model.BookList;
+import com.codecool.kp.sffvectoradmin.model.book.BookList;
 import com.codecool.kp.sffvectoradmin.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

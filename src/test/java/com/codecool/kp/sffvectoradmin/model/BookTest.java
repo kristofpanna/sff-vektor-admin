@@ -1,5 +1,7 @@
 package com.codecool.kp.sffvectoradmin.model;
 
+import com.codecool.kp.sffvectoradmin.model.book.Author;
+import com.codecool.kp.sffvectoradmin.model.book.Book;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

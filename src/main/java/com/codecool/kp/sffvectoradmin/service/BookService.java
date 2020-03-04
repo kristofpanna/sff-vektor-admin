@@ -1,7 +1,7 @@
 package com.codecool.kp.sffvectoradmin.service;
 
-import com.codecool.kp.sffvectoradmin.model.Book;
-import com.codecool.kp.sffvectoradmin.model.BookList;
+import com.codecool.kp.sffvectoradmin.model.book.Book;
+import com.codecool.kp.sffvectoradmin.model.book.BookList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

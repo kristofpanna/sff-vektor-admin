@@ -1,7 +1,7 @@
 package com.codecool.kp.sffvectoradmin.service;
 
-import com.codecool.kp.sffvectoradmin.model.Author;
-import com.codecool.kp.sffvectoradmin.model.Book;
+import com.codecool.kp.sffvectoradmin.model.book.Author;
+import com.codecool.kp.sffvectoradmin.model.book.Book;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

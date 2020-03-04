@@ -1,4 +1,4 @@
-package com.codecool.kp.sffvectoradmin.model;
+package com.codecool.kp.sffvectoradmin.model.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
