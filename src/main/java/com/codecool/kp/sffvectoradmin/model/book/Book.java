@@ -40,8 +40,13 @@ public class Book implements Comparable<Book> {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Author> authors = new ArrayList<>();
 
+    @Singular
     @ManyToMany(mappedBy = "books", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<BookList> lists = new HashSet<>();
+
+    @Singular
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<Alternative> alternatives = new ArrayList<>();
 
 
     public String getKey() {

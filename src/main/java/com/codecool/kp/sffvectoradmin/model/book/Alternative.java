@@ -2,14 +2,10 @@ package com.codecool.kp.sffvectoradmin.model.book;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +21,11 @@ public class Alternative {
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    private Book book;
+
+    @Singular
+    @OneToMany(mappedBy = "alternative", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<MolyUrl> urls;
 }
