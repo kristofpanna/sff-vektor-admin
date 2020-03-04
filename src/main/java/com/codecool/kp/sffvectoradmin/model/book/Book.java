@@ -2,6 +2,9 @@ package com.codecool.kp.sffvectoradmin.model.book;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +13,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Book {
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String title;
