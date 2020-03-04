@@ -1,5 +1,6 @@
 package com.codecool.kp.sffvectoradmin.model.user;
 
+import com.codecool.kp.sffvectoradmin.model.book.Book;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Data
 @AllArgsConstructor
@@ -25,6 +27,12 @@ public class Plan {
     private Long id;
 
     private PlanStatus status;
+
+    @ManyToOne
+    private Reader reader;
+
+    @ManyToOne
+    private Book book;
 
     public enum PlanStatus {
         UNDECIDED,

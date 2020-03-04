@@ -7,7 +7,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +38,8 @@ public class Reader {
             inverseJoinColumns = @JoinColumn(name = "booklist_id")
     )
     private List<BookList> judgesLists = new ArrayList<>();
+
+    @Singular
+    @OneToMany(mappedBy = "reader", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private Set<Plan> plans = new HashSet<>();
 }

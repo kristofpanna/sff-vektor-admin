@@ -1,5 +1,6 @@
 package com.codecool.kp.sffvectoradmin.model.book;
 
+import com.codecool.kp.sffvectoradmin.model.user.Plan;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
@@ -49,6 +50,10 @@ public class Book implements Comparable<Book> {
     @Singular
     @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Alternative> alternatives = new ArrayList<>();
+
+    @Singular
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private Set<Plan> plans = new HashSet<>();
 
 
     public String getKey() {
