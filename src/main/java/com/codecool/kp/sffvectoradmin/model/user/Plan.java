@@ -8,10 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -22,16 +19,17 @@ import javax.persistence.ManyToOne;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Plan {
-    @Id
-    @GeneratedValue
-    private Long id;
+    @EmbeddedId
+    private PlanKey planKey;
 
     private PlanStatus status;
 
     @ManyToOne
+    @MapsId("reader_id")
     private Reader reader;
 
     @ManyToOne
+    @MapsId("book_id")
     private Book book;
 
     public enum PlanStatus {
