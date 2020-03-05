@@ -45,4 +45,10 @@
 + get book info: 
     + title:  span.fn
     + authors:  div.authors a
+  
+    
+## Persistence
+* many-to-many
+    * https://www.baeldung.com/jpa-many-to-many
+    * (composite id: https://www.baeldung.com/hibernate-identifiers)
 
