@@ -8,14 +8,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/list/{listId}")
-    public BookList getBookList(@PathVariable Long listId) {
-        return bookService.getBookList(listId);
+    @GetMapping("/list/{year}/{genre}")
+    public BookList getBookList(@PathVariable int year, @PathVariable String genre) {
+        return bookService.getBookList(year, genre);
+    }
+
+    @GetMapping("/list/{year}")
+    public List<BookList> getBookList(@PathVariable int year) {
+        return bookService.getBookListsByYear(year);
     }
 }

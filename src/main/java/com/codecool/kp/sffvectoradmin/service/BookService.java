@@ -2,6 +2,7 @@ package com.codecool.kp.sffvectoradmin.service;
 
 import com.codecool.kp.sffvectoradmin.model.book.Book;
 import com.codecool.kp.sffvectoradmin.model.book.BookList;
+import com.codecool.kp.sffvectoradmin.repository.BookListRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,22 @@ import java.util.stream.Collectors;
 public class BookService {
 
     @Autowired
+    BookListRepository listRepository;
+
+    @Autowired
     MolyScrapingService scrapingService;
 
-    // "repo" with one booklist
-    private BookList bookList;
 
-    public BookList getBookList(Long listId) {
-        // TODO get from repository, do scheduled scrapings and save to db
-        refreshBookLists();
-        return bookList;
+    public BookList getBookList(int year, String genre) {
+        return listRepository.findByYearAndGenre(year, genre).get();
+    }
+
+    public List<BookList> getBookListsByYear(int year) {
+        return listRepository.findAllByYear(year);
+    }
+
+    public void addNewList(BookList list) {
+        listRepository.save(list);
     }
 
 
@@ -34,7 +42,6 @@ public class BookService {
         // TODO all lists (from db)
         //String bookListUrl = "/listak/2019-es-science-fiction-megjelenesek";
         //String bookListUrl = "/polcok/besorolasra-var-2019";
-        //String bookListUrl = "/polcok/csak-nalunk-kaphato-kiadvanyok";
         String bookListUrl = "/listak/2020-terv-4";
 
         final List<MolyShelfItem> shelfItems = scrapingService.getShelfItemsFromUrl(bookListUrl);
@@ -47,7 +54,7 @@ public class BookService {
         final List<Book> books = refreshBooksByShelfItems(shelfItems);
 
         // TODO refresh book-booklist connections
-        this.bookList = BookList.builder()
+        var bookList = BookList.builder()
                 .url(bookListUrl)
                 .year(2020)
                 .genre("sci-fi")

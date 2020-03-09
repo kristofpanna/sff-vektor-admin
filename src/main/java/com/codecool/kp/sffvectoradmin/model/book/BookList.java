@@ -23,8 +23,8 @@ public class BookList {
     @GeneratedValue
     private Long id;
 
-    private String genre;
-    private int year;
+    private String genre; // TODO only with url-compatible characters :)
+    private int year; // TODO only year, with constraint
     private String url;
 
     @Singular
