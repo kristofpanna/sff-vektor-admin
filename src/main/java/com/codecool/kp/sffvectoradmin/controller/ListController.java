@@ -9,16 +9,17 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class BookController {
+@RequestMapping("/list")
+public class ListController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/list/{year}/{genre}")
+    @GetMapping("/{year}/{genre}")
     public BookList getBookList(@PathVariable int year, @PathVariable String genre) {
         return bookService.getBookList(year, genre);
     }
 
-    @GetMapping("/list/{year}")
+    @GetMapping("/{year}")
     public List<BookList> getBookList(@PathVariable int year) {
         return bookService.getBookListsByYear(year);
     }
